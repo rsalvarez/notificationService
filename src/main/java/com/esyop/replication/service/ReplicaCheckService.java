@@ -1,4 +1,4 @@
-package com.example.replicacionservice.service;
+package com.esyop.replication.service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -7,8 +7,8 @@ import java.time.LocalDate;
 import java.util.List;
 
 
-import com.example.replicacionservice.model.RegistroReplica;
-import com.example.replicacionservice.repository.RegistroReplicaRepository;
+import com.esyop.replication.model.RegistroReplica;
+import com.esyop.replication.repository.RegistroReplicaRepository;
 
 @Service
 public class ReplicaCheckService {

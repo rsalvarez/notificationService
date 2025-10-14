@@ -1,4 +1,4 @@
-package com.example.replicacionservice.service;
+package com.esyop.replication.service;
 
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;

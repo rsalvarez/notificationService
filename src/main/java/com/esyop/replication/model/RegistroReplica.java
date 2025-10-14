@@ -1,4 +1,4 @@
-package com.example.replicacionservice.model;
+package com.esyop.replication.model;
 
 import javax.persistence.*;
 import java.time.LocalDate;

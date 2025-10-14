@@ -1,8 +1,8 @@
-package com.example.replicacionservice.scheduler;
+package com.esyop.replication.scheduler;
 
+import com.esyop.replication.service.ReplicaCheckService;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
-import com.example.replicacionservice.service.ReplicaCheckService;
 
 @Component
 public class ReplicaCheckScheduler {

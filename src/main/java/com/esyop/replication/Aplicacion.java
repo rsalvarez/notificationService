@@ -1,4 +1,4 @@
-package com.example.replicacionservice;
+package com.esyop.replication;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
