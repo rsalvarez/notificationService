@@ -1,0 +1,63 @@
+package com.example.replicacionservice.service;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
+import java.time.LocalDate;
+import java.util.List;
+
+
+import com.example.replicacionservice.model.RegistroReplica;
+import com.example.replicacionservice.repository.RegistroReplicaRepository;
+
+@Service
+public class ReplicaCheckService {
+    private static final Logger logger = LoggerFactory.getLogger(ReplicaCheckService.class);
+
+    private final RegistroReplicaRepository registroRepo;
+    private final EmailService emailService;
+
+    public ReplicaCheckService(RegistroReplicaRepository registroRepo, EmailService emailService) {
+        this.registroRepo = registroRepo;
+        this.emailService = emailService;
+    }
+
+    public void verificarYEnviar() throws Exception {
+        LocalDate hoy = LocalDate.now();
+        List<RegistroReplica> registrosDeHoy = registroRepo.findByFecha(hoy);
+
+        if (registrosDeHoy.isEmpty()) {
+            System.out.println("✅ No hay registros de fallas de replicación hoy (" + hoy + ")");
+            return;
+        }
+
+        StringBuilder html = new StringBuilder();
+        html.append("<html><body>");
+        html.append("<h2 style='color:#2c3e50;'>Reporte de replicación del día ")
+            .append(hoy)
+            .append("</h2>");
+        html.append("<p>Los siguientes centros verdes no pudieron replicarse correctamente:</p>");
+        html.append("<table style='border-collapse:collapse;width:100%;'>")
+            .append("<thead><tr>")
+            .append("<th style='border:1px solid #ddd;padding:8px;background:#f2f2f2;'>#</th>")
+            .append("<th style='border:1px solid #ddd;padding:8px;background:#f2f2f2;'>Centro Verde</th>")
+            .append("<th style='border:1px solid #ddd;padding:8px;background:#f2f2f2;'>Fecha</th>")
+            .append("</tr></thead><tbody>");
+
+        int i = 1;
+        for (RegistroReplica r : registrosDeHoy) {
+            html.append("<tr>")
+                .append("<td style='border:1px solid #ddd;padding:8px;'>").append(i++).append("</td>")
+                .append("<td style='border:1px solid #ddd;padding:8px;'>").append(r.getNombreCentroverde()).append("</td>")
+                .append("<td style='border:1px solid #ddd;padding:8px;'>").append(r.getFecha()).append("</td>")
+                .append("</tr>");
+        }
+
+        html.append("</tbody></table>");
+        html.append("<p style='margin-top:15px;color:#555;'>Atentamente,<br><b>Sistema de Monitoreo de Replicación</b></p>");
+        html.append("</body></html>");
+
+        emailService.enviarCorreo("soporte@empresa.com", "Centros verdes sin replicar - " + hoy, html.toString());
+        logger.info("📧 Correo enviado con " + registrosDeHoy.size() + " registros de fallas (" + hoy + ")");
+    }
+}
