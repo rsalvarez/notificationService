@@ -10,4 +10,5 @@ import java.util.List;
 @Repository
 public interface RegistroReplicaRepository extends JpaRepository<RegistroReplica, Long> {
     List<RegistroReplica> findByFecha(LocalDate fecha);
+    List<RegistroReplica> findByFechaAndProcesado(LocalDate fecha, String procesado);
 }

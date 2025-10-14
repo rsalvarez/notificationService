@@ -17,7 +17,7 @@ public class EmailService {
     public void enviarCorreo(String destinatario, String asunto, String contenidoHtml) throws Exception {
         MimeMessage mensaje = mailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(mensaje, true, "UTF-8");
-
+        helper.setFrom("rafaelrio4@gmail.com");
         helper.setTo(destinatario);
         helper.setSubject(asunto);
         helper.setText(contenidoHtml, true);

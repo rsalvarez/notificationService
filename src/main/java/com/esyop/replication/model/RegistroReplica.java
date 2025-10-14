@@ -14,6 +14,16 @@ public class RegistroReplica {
     private String nombreCentroverde;
     private LocalDate fecha;
 
+    private String procesado;
+
+    public String getProcesado() {
+        return procesado;
+    }
+
+    public void setProcesado(String procesado) {
+        this.procesado = procesado;
+    }
+
     // Getters y setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }

@@ -13,7 +13,7 @@ public class ReplicaCheckScheduler {
         this.replicaCheckService = replicaCheckService;
     }
 
-    @Scheduled(cron = "0 0 8 * * ?")
+    @Scheduled(cron = "0 * * * * *")
     public void ejecutarTareaDiaria() throws Exception {
         replicaCheckService.verificarYEnviar();
     }
