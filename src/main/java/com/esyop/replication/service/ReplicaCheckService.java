@@ -29,7 +29,7 @@ public class ReplicaCheckService {
         List<RegistroReplica> registrosDeHoy = registroRepo.findByFechaAndProcesado(hoy,"N");
 
         if (registrosDeHoy.isEmpty()) {
-            System.out.println("✅ No hay registros de fallas de replicación hoy (" + hoy + ")");
+            logger.info ("✅ No hay registros de fallas de replicación hoy (" + hoy + ")");
             return;
         }
 
@@ -52,6 +52,8 @@ public class ReplicaCheckService {
                     .append("<td style='border:1px solid #ddd;padding:8px;'>").append(i.getAndIncrement()).append("</td>")
                     .append("<td style='border:1px solid #ddd;padding:8px;'>").append(r.getNombreCentroverde()).append("</td>")
                     .append("<td style='border:1px solid #ddd;padding:8px;'>").append(r.getFecha().format(DateTimeFormatter.ISO_DATE)).append("</td>")
+                    .append("<td style='border:1px solid #ddd;padding:8px;'>").append(r.getError()).append("</td>")
+                    .append("<td style='border:1px solid #ddd;padding:8px;'>").append(r.getErrorLevel()).append("</td>")
                     .append("</tr>");
         });
 
