@@ -2,6 +2,7 @@ package com.esyop.replication.service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -15,6 +16,9 @@ import com.esyop.replication.repository.RegistroReplicaRepository;
 @Service
 public class ReplicaCheckService {
     private static final Logger logger = LoggerFactory.getLogger(ReplicaCheckService.class);
+
+    @Value("${emails.values.recivers}")
+    private String recivers;
 
     private final RegistroReplicaRepository registroRepo;
     private final EmailService emailService;
@@ -61,7 +65,7 @@ public class ReplicaCheckService {
         html.append("<p style='margin-top:15px;color:#555;'>Atentamente,<br><b>Sistema de Monitoreo de Replicación</b></p>");
         html.append("</body></html>");
 
-        emailService.enviarCorreo("rafaelrio4@gmail.com", "Centros verdes sin replicar - " + hoy, html.toString());
+        emailService.enviarCorreo(recivers, "Centros verdes sin replicar - " + hoy, html.toString());
         logger.info("📧 Correo enviado con " + registrosDeHoy.size() + " registros de fallas (" + hoy + ")");
         registroRepo.saveAll(registrosDeHoy);
     }
