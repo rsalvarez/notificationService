@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -32,9 +33,8 @@ public class ReplicaCheckService {
     }
 
     public void verificarYEnviar() throws Exception {
-        LocalDate hoy = LocalDate.now();
-        List<RegistroReplica> registrosDeHoy = registroRepo.findByFechaAndProcesado(hoy,"N");
-
+        LocalDateTime hoy = LocalDateTime.parse(LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME));
+        List<RegistroReplica> registrosDeHoy = registroRepo.findByFechaAndProcesado(hoy.toLocalDate(),"N");
         if (registrosDeHoy.isEmpty()) {
             logger.info ("✅ No hay registros de fallas de replicación hoy (" + hoy + ")");
             return;
@@ -43,10 +43,7 @@ public class ReplicaCheckService {
         StringBuilder html = new StringBuilder();
         html.append("<html><body>");
         html.append("<h2 style='color:#2c3e50;'>Reporte de replicación del día ")
-            .append(hoy).append(" ")
-                .append(LocalTime.now().getHour())
-                .append(":")
-                .append(LocalTime.now().getMinute())
+            .append(hoy)
             .append("</h2>");
         html.append("<p>Los siguientes servidores no pudieron replicarse correctamente:</p>");
         html.append("<table style='border-collapse:collapse;width:100%;'>")
