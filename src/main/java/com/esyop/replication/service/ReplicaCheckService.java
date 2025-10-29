@@ -43,10 +43,10 @@ public class ReplicaCheckService {
         StringBuilder html = new StringBuilder();
         html.append("<html><body>");
         html.append("<h2 style='color:#2c3e50;'>Reporte de replicación del día ")
-            .append(hoy)
-                .append(LocalTime.now().getMinute())
+            .append(hoy).append(" ")
+                .append(LocalTime.now().getHour())
                 .append(":")
-                .append(LocalTime.now().getSecond())
+                .append(LocalTime.now().getMinute())
             .append("</h2>");
         html.append("<p>Los siguientes servidores no pudieron replicarse correctamente:</p>");
         html.append("<table style='border-collapse:collapse;width:100%;'>")
