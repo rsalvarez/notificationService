@@ -33,7 +33,10 @@ public class ReplicaCheckService {
     }
 
     public void verificarYEnviar() throws Exception {
-        String hoy =  LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+
+        DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+        String hoy = LocalDateTime.now().format(formato);
+
         LocalDate now =LocalDate.now();
         List<RegistroReplica> registrosDeHoy = registroRepo.findByFechaAndProcesado(now,"N");
         if (registrosDeHoy.isEmpty()) {
