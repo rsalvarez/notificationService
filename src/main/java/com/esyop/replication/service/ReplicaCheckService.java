@@ -33,8 +33,9 @@ public class ReplicaCheckService {
     }
 
     public void verificarYEnviar() throws Exception {
-        LocalDateTime hoy = LocalDateTime.parse(LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME));
-        List<RegistroReplica> registrosDeHoy = registroRepo.findByFechaAndProcesado(hoy.toLocalDate(),"N");
+        String hoy =  LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+        LocalDate now =LocalDate.now();
+        List<RegistroReplica> registrosDeHoy = registroRepo.findByFechaAndProcesado(now,"N");
         if (registrosDeHoy.isEmpty()) {
             logger.info ("✅ No hay registros de fallas de replicación hoy (" + hoy + ")");
             return;
